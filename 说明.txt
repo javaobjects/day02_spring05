@@ -1,0 +1,42 @@
+bean的属性：
+		1. id:引用名称，每个对象的唯一标识，不允许重复
+		
+		2. class:包名  + 类名，表示需要new的对象的路径
+		
+		3. init-method：指定对象使用过程中的初始化方法
+		
+		4. destroy-method：指定对象使用过程中的销毁方法
+		
+		bean的生命周期： 实例化  -> 初始化 —> 使用对象  ->  销毁
+		
+		<bean id="userDao" class="spring.UserDaoImpl" init-method="myInit" destroy-method="myDestroy"></bean>
+			
+--------------------------------------------------------------------------------------------------------
+		5.factory-bean:指定实例工厂的引用名称
+		
+		6.factory-method：调用工厂中的方法名称
+		
+		<bean id="factory" class="spring.factory.DaoNonStaticFactory"></bean>
+	    <bean id="userDao3" factory-bean="factory"  factory-method="createUserDao"></bean>
+	    
+--------------------------------------------------------------------------------------------------------
+        7.scope:指定bean的作用域范围
+        
+         scope取值：singleton（默认）,prototype,request,session,globalSession
+        	
+		 <bean id="userDao" class="spring.UserDaoImpl" scope="singleton"></bean>
+		 
+--------------------------------------------------------------------------------------------------------
+       8.depends-on属性:可以用于当前bean初始化之前显式地强制一个或多个bean被初始化。多个对象之间","逗号隔开
+		
+	   9.lazy-init:false，默认值，该bean为非懒加载对象（积极加载），解析xml时，即被实例化
+				   true，该bean为懒加载对象（延迟加载），直到调用getBean()方法时，才会被实例化
+				  
+	   10.default-lazy-init:设置当前xml中所有的bean是否为懒加载对象
+	   
+	    <bean id="userService" class="spring.UserService" lazy-init="false" depends-on="systemSetting">
+			<constructor-arg ref="userDao"></constructor-arg>
+		</bean>
+		
+		
+		

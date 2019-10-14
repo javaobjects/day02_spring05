@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+	   default-lazy-init="false"                    
+	   >
+
+	<bean id="userDao" class="spring.UserDaoImpl" lazy-init="false"></bean>
+	
+	<!-- 
+		depends-on属性:可以用于当前bean初始化之前显式地强制一个或多个bean被初始化。多个对象之间","逗号隔开
+		
+		lazy-init:false，默认值，该bean为非懒加载对象（积极加载），解析xml时，即被实例化
+				  true，该bean为懒加载对象（延迟加载），直到调用getBean()方法时，才会被实例化
+				  
+		 default-lazy-init:设置当前xml中所有的bean是否为懒加载对象
+	 -->
+	<bean id="userService" class="spring.UserService" lazy-init="false" depends-on="systemSetting">
+		<constructor-arg ref="userDao"></constructor-arg>
+	</bean>
+
+	<bean id="systemSetting" class="spring.system.SystemSetting" lazy-init="false"></bean>
+</beans>
